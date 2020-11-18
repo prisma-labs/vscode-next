@@ -1,4 +1,5 @@
 import { Project, ProjectOptions } from "ts-morph";
+import { debug } from "../../helpers/debug";
 import { addMissingImports } from "./addImports";
 import { addJSDoc } from "./addJSDoc";
 import { addTSType } from "./addTSType";
@@ -29,23 +30,24 @@ export class NextTypes {
         ...options?.tsProjectOptions?.compilerOptions,
       },
     });
-    this.options = options;
   }
   async run(filePath: string): Promise<void> {
     // Read more: https://ts-morph.com/setup/
     const sourceFile = this.project.addSourceFileAtPath(filePath);
 
     const foundFunctions = getUsedNextFunctions(sourceFile);
+    debug("nextTypes")({ foundFunctions });
     if (foundFunctions) {
       if (isJS(sourceFile)) {
+        debug("nextTypes")("is JS file");
         findNodes(sourceFile, foundFunctions, addJSDoc);
       } else {
+        debug("nextTypes")("is TS file");
         addMissingImports(sourceFile, foundFunctions);
         findNodes(sourceFile, foundFunctions, addTSType);
       }
-      if (this.options?.save) {
-        await this.project.save();
-      }
+      debug("nextTypes")("saving project");
+      await this.project.save();
     }
     this.project.removeSourceFile(sourceFile);
   }

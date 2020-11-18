@@ -7,11 +7,11 @@ import {
   window,
   workspace,
 } from "vscode";
+import { debug } from "../../helpers/debug";
+import settings from "../../helpers/settings";
 import { packageJsonIncludes } from "../../helpers/workspace";
 import { PrismaVSCodePlugin } from "../types";
 import { NextTypes } from "./nextTypes";
-import settings from "./settings";
-
 const nextTypes = new NextTypes({ save: true });
 const supportedLanguageIds = [
   "typescriptreact",
@@ -31,28 +31,29 @@ const plugin: PrismaVSCodePlugin = {
       "devDependencies",
     ]);
 
+    debug("nextjs:enable")({ hasNext, hasPrismaCLI });
     return hasNext && hasPrismaCLI;
   },
   activate: async (context) => {
-    
     // TODO Someone please help with a better message
-    if (!settings.hasPrompted()) {
+    if (!settings.nextjs.hasPrompted()) {
       const res = await window.showInformationMessage(
         "Would you like to enable nextjs-prisma autotypes [EXPERIMENTAL]",
         "Yes",
         "No"
       );
       if (res === "Yes") {
-        await settings.shouldAutoFormat(true);
+        await settings.nextjs.shouldAutoFormat(true);
       }
-      await settings.hasPrompted(true);
+      await settings.nextjs.hasPrompted(true);
     }
-    if (settings.shouldAutoFormat()) {
+    if (settings.nextjs.shouldAutoFormat()) {
+      debug("nextjs:onSave")("adding on save hook");
       workspace.onWillSaveTextDocument((e: TextDocumentWillSaveEvent) => {
         if (
           e.reason === TextDocumentSaveReason.Manual &&
           supportedLanguageIds.includes(e.document.languageId) &&
-          settings.shouldAutoFormat()
+          settings.nextjs.shouldAutoFormat()
         ) {
           shouldUpdate = true;
         }
@@ -67,6 +68,7 @@ const plugin: PrismaVSCodePlugin = {
       );
       context.subscriptions.push(onSaveDisposable);
     }
+    debug("nextjs:command")("registering addTypes");
     context.subscriptions.push(
       commands.registerCommand("prisma-labs.nextjs.addTypes", async () => {
         await formatDocument();
@@ -84,7 +86,7 @@ async function formatDocument(document?: TextDocument) {
     !filename.includes(path.join("pages", "api"))
   ) {
     try {
-      console.log(`Adding Types to ${filename}`);
+      debug("nextjs")(`adding types to ${filename}`);
       await nextTypes.run(filename);
     } catch (e) {
       console.error(e);
