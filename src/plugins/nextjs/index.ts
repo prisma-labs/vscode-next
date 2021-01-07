@@ -67,7 +67,7 @@ const plugin: PrismaVSCodePlugin = {
     }
     debug("nextjs:command")("registering addTypes");
     context.subscriptions.push(
-      commands.registerCommand("prisma-labs.nextjs.addTypes", async () => {
+      commands.registerCommand("WillLuke.nextjs.addTypes", async () => {
         await formatDocument();
       })
     );
