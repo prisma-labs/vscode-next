@@ -9,7 +9,7 @@ This extension also enables type safety in js code by leveraging JSDOCs
 <br/>
 
 <p align="center">
-  <img src="https://github.com/prisma-labs/vscode-next/raw/main/images/NextJS-AutoTypes.gif" title="Demo">
+  <img src="https://github.com/prisma-labs/vscode-next/blob/main/images/NextJS-AutoTypes.gif?raw=true" title="Demo">
 </p>
 
 ## Requirements
@@ -44,7 +44,7 @@ yarn
 Use VSCode built in debugger and select Run Extension
 
 <p align="center">
-  <img src="https://github.com/prisma-labs/vscode-next/raw/main/images/run-extension.png" title="Run Extension">
+  <img src="https://github.com/prisma-labs/vscode-next/blob/main/images/run-extension.png?raw=true" title="Run Extension">
 </p>
 
 ### Packaging
