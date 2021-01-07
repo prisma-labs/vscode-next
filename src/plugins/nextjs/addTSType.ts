@@ -1,14 +1,13 @@
 import { ArrowFunction, FunctionDeclaration } from "ts-morph";
-import { NextFunctionName, NextFunctionType } from "./constants";
 import { debug } from "../../helpers/debug";
-
+import { NextFunctionName, NextFunctionType } from "./constants";
 
 export function addTSType(
   node: ArrowFunction | FunctionDeclaration,
   foundNextFunctions: NextFunctionType
 ): void {
   const typeString = buildTypeString(foundNextFunctions);
-  debug("addTSType")({typeString})
+  debug("addTSType")({ typeString });
 
   const params = node.getParameters();
   const param = params[0];
