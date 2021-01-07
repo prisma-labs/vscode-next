@@ -2,9 +2,9 @@
   "name": "nextjs",
   "displayName": "Prisma NextJS",
   "icon": "images/icon.png",
-  "repository": "noop",
+  "repository": "https://github.com/prisma-labs/vscode-next",
   "description": "Automagicly add types to **nextjs** page functions i.e `getStaticSideProps`, `getServerSideProps` the returned types can not be automatically inferred and passed to the page. This extension also enables type safety in js code by leveraging JSDOCs",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "publisher": "WillLuke",
   "engines": {
     "vscode": "^1.51.0"
