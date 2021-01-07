@@ -1,4 +1,4 @@
-# AutoTypes for NextJSs Funky Function
+# AutoTypes for NextJSs Funky Functions
 
 ## Current Issues/Limitations
 
