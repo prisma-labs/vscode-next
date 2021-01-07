@@ -1,4 +1,4 @@
-import { ArrowFunction, FunctionDeclaration, TypeGuards } from "ts-morph";
+import { ArrowFunction, FunctionDeclaration, Node } from "ts-morph";
 import { debug } from "../../helpers/debug";
 import { NextFunctionName, NextFunctionType } from "./constants";
 
@@ -19,7 +19,7 @@ export function addJSDoc(
     debug("addJSDoc")({ jsDocType });
 
     if (
-      TypeGuards.isFunctionDeclaration(node) &&
+      Node.isFunctionDeclaration(node) &&
       node.getJsDocs().length === 0
     ) {
       if (!param) {

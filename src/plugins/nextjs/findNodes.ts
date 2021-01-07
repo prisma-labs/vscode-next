@@ -2,7 +2,7 @@ import {
   ArrowFunction,
   FunctionDeclaration,
   SourceFile,
-  TypeGuards,
+  Node,
 } from "ts-morph";
 import { debug } from "../../helpers/debug";
 import { NextFunctionType } from "./constants";
@@ -28,17 +28,17 @@ export function findNodes(
     const declaration = defaultExportSymbol.getDeclarations()[0];
     if (!declaration) return;
 
-    if (TypeGuards.isFunctionDeclaration(declaration)) {
+    if (Node.isFunctionDeclaration(declaration)) {
       debug("findNodes")("isFunctionDeclaration");
       addTypes(declaration, foundNextFunctions);
-    } else if (TypeGuards.isExportAssignment(declaration)) {
+    } else if (Node.isExportAssignment(declaration)) {
       debug("findNodes")("isExportAssignment");
       const expr = declaration.getExpression();
 
-      if (TypeGuards.isArrowFunction(expr)) {
+      if (Node.isArrowFunction(expr)) {
         debug("findNodes")("isArrowFunction");
         addTypes(expr, foundNextFunctions);
-      } else if (TypeGuards.isIdentifier(expr)) {
+      } else if (Node.isIdentifier(expr)) {
         debug("findNodes")("isIdentifier");
         const node = expr
           .findReferences()[0]
@@ -47,14 +47,14 @@ export function findNodes(
         const child = node?.getLastChild();
 
         if (
-          TypeGuards.isFunctionDeclaration(node) ||
-          TypeGuards.isArrowFunction(node)
+          Node.isFunctionDeclaration(node) ||
+          Node.isArrowFunction(node)
         ) {
           debug("findNodes")("isFunctionDeclaration | isArrowFunction");
           addTypes(node, foundNextFunctions);
         } else if (
-          TypeGuards.isArrowFunction(child) ||
-          TypeGuards.isFunctionDeclaration(child)
+          Node.isArrowFunction(child) ||
+          Node.isFunctionDeclaration(child)
         ) {
           debug("findNodes")("child isFunctionDeclaration | isArrowFunction");
           addTypes(child, foundNextFunctions);
