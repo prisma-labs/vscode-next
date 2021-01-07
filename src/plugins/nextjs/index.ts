@@ -27,18 +27,15 @@ const plugin: PrismaVSCodePlugin = {
   enabled: async () => {
     // TODO Add Workspace Support currently only checks the workspace root for deps
     const hasNext = await packageJsonIncludes("next", ["dependencies"]);
-    const hasPrismaCLI = await packageJsonIncludes("@prisma/cli", [
-      "devDependencies",
-    ]);
 
-    debug("nextjs:enable")({ hasNext, hasPrismaCLI });
-    return hasNext && hasPrismaCLI;
+    debug("nextjs:enable")({ hasNext });
+    return hasNext;
   },
   activate: async (context) => {
     // TODO Someone please help with a better message
     if (!settings.nextjs.hasPrompted()) {
       const res = await window.showInformationMessage(
-        "Would you like to enable nextjs-prisma autotypes [EXPERIMENTAL]",
+        "Would you like to enable NextJS autotypes",
         "Yes",
         "No"
       );
