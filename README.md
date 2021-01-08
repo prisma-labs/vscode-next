@@ -2,7 +2,8 @@
 
 ## Features
 
-Automagicly add types to **nextjs** page functions i.e `getStaticSideProps`, `getServerSideProps` the returned types can not be automatically inferred and passed to the page. 
+Automagicly add types to **Next.js** pages if you use `getStaticSideProps` or `getServerSideProps`.
+The returned types can not be automatically inferred and passed to the page. 
 
 This extension also enables type safety in js code by leveraging JSDOCs
 
